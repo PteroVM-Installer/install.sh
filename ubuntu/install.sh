@@ -53,8 +53,15 @@ else
     apt-get -y install curl
     apt-get -y install wget
     apt-get -y install neofetch
+
+    if ! mount -o remount,rw /usr 2>/dev/null; then
+        echo -e "\nRemounting /usr with write permissions failed."
+        exit 1
+    fi
+
     curl -o /bin/systemctl https://raw.githubusercontent.com/gdraheim/docker-systemctl-replacement/master/files/docker/systemctl3.py
     chmod +x /bin/systemctl
     echo "Starting PteroVM"
     ./dist/proot -S . /bin/bash --login
 fi
+
