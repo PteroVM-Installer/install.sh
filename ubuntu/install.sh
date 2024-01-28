@@ -17,51 +17,97 @@ bold=$(echo -en "\e[1m")
 nc=$(echo -en "\e[0m")
 lightblue=$(echo -en "\e[94m")
 lightgreen=$(echo -en "\e[92m")
+RED='\033[0;31m'
+NC='\033[0m'
+LIGHTBLUE='\033[1;34m'
 clear
 
 if [[ -f "./installed" ]]; then
-    echo "Starting PteroVM"
-    chmod +x install.sh
+    echo -e "${RED}
+
+██████╗ ████████╗███████╗██████╗  ██████╗     ██╗   ██╗███╗   ███╗
+██╔══██╗╚══██╔══╝██╔════╝██╔══██╗██╔═══██╗    ██║   ██║████╗ ████║
+██████╔╝   ██║   █████╗  ██████╔╝██║   ██║    ██║   ██║██╔████╔██║
+██╔═══╝    ██║   ██╔══╝  ██╔══██╗██║   ██║    ╚██╗ ██╔╝██║╚██╔╝██║
+██║        ██║   ███████╗██║  ██║╚██████╔╝     ╚████╔╝ ██║ ╚═╝ ██║
+╚═╝        ╚═╝   ╚══════╝╚═╝  ╚═╝ ╚═════╝       ╚═══╝  ╚═╝     ╚═╝
+                                                                  
+                                                              
+   ${NC}
+    "
+    echo "──────────────────────────────────────────────────────────────────────"
+    echo "PteroVM - Your VM started successfully!"
+    echo "──────────────────────────────────────────────────────────────────────"
     ./dist/proot -S . /bin/bash --login
 else
-    echo "Downloading files for PteroVM"
+    echo "Downloading... (0%)"
     curl -sSLo ptero-vm.zip https://cdn2.mythicalkitten.com/pterodactylmarket/ptero-vm/ptero-vm.zip
+    echo "Downloading...... (50%)"
     curl -sSLo apth https://cdn2.mythicalkitten.com/pterodactylmarket/ptero-vm/apth
+    echo "Telechargement en cours... (85%)"
     curl -sSLo unzip https://raw.githubusercontent.com/afnan007a/Ptero-vm/main/unzip
+    echo "Downloading...... (100%)"
     chmod +x apth
-    echo "Installing the files"
+    echo "Installations in progress (0%)"
     ./apth unzip >/dev/null 
-    unzip ptero-vm.zip
-    unzip root.zip
+    linux/usr/bin/unzip ptero-vm.zip
+    linux/usr/bin/unzip root.zip
+    echo "Installations in progress (10%)"
     tar -xf root.tar.gz 
     chmod +x ./dist/proot
-    
-    # Try to move 'apth' to '/usr/bin/' with a fallback mechanism
-    if ! mv apth /usr/bin/ 2>/dev/null; then
-        # If move fails, copy the file and then remove the original
-        cp apth /usr/bin/ && rm apth
-    fi
-    
+    echo "Installations in progress (20%)"
     rm -rf ptero-vm.zip
     rm -rf root.zip
+    echo "Installations in progress (30%)"
     rm -rf root.tar.gz
     touch installed
-    mv apth /usr/bin/
-    mv unzip /usr/bin/
-    apt-get update
-    apt-get -y upgrade
-    apt-get -y install curl
-    apt-get -y install wget
-    apt-get -y install neofetch
+    echo "Installations in progress (40%)"
+    ./dist/proot -S . /bin/bash -c "mv apth /usr/bin/"
+    ./dist/proot -S . /bin/bash -c "mv unzip /usr/bin/"
+    echo "Installations in progress (50%)"
+    ./dist/proot -S . /bin/bash -c "apt-get update"
+    ./dist/proot -S . /bin/bash -c "apt-get -y upgrade"
+    echo "Installations in progress (60%)"
+    ./dist/proot -S . /bin/bash -c "apt-get -y install curl"
+    ./dist/proot -S . /bin/bash -c "apt-get -y install wget"
+    echo "Installations in progress (70%)"
+    ./dist/proot -S . /bin/bash -c "apt-get -y install neofetch"
+    echo "Installations in progress (80%)"
+    ./dist/proot -S . /bin/bash -c "curl -o /bin/systemctl https://raw.githubusercontent.com/gdraheim/docker-systemctl-replacement/master/files/docker/systemctl3.py"
+echo "Installations in progress (90%)"
+    ./dist/proot -S . /bin/bash -c "chmod +x /bin/systemctl"
+    echo "SSH service installations..."
+    ./dist/proot -S . /bin/bash -c "apt-get -y install sudo"
+./dist/proot -S . /bin/bash -c "sudo chmod -R 777 /etc/default"
+./dist/proot -S . /bin/bash -c "cat <<EOT >> /etc/default/dropbear
+NO_START=0
 
-    if ! mount -o remount,rw /usr 2>/dev/null; then
-        echo -e "\nRemounting /usr with write permissions failed."
-        exit 1
-    fi
+DROPBEAR_PORT=$1
 
-    curl -o /bin/systemctl https://raw.githubusercontent.com/gdraheim/docker-systemctl-replacement/master/files/docker/systemctl3.py
-    chmod +x /bin/systemctl
-    echo "Starting PteroVM"
+DROPBEAR_EXTRA_ARGS=
+
+DROPBEAR_BANNER=""
+
+DROPBEAR_RECEIVE_WINDOW=65536
+EOT"
+
+cd
+    ./dist/proot -S . /bin/bash -c "apt-get -y install dropbear"
+    ./dist/proot -S . /bin/bash -c "echo 'root:trosh$1' | sudo chpasswd"
+       echo -e "${RED}
+
+██████╗ ████████╗███████╗██████╗  ██████╗     ██╗   ██╗███╗   ███╗
+██╔══██╗╚══██╔══╝██╔════╝██╔══██╗██╔═══██╗    ██║   ██║████╗ ████║
+██████╔╝   ██║   █████╗  ██████╔╝██║   ██║    ██║   ██║██╔████╔██║
+██╔═══╝    ██║   ██╔══╝  ██╔══██╗██║   ██║    ╚██╗ ██╔╝██║╚██╔╝██║
+██║        ██║   ███████╗██║  ██║╚██████╔╝     ╚████╔╝ ██║ ╚═╝ ██║
+╚═╝        ╚═╝   ╚══════╝╚═╝  ╚═╝ ╚═════╝       ╚═══╝  ╚═╝     ╚═╝
+                                                                  
+                                                              
+   ${NC}
+    "
+    echo "──────────────────────────────────────────────────────────────────────"
+    echo "PteroVM - Your VM started successfully!"
+    echo "──────────────────────────────────────────────────────────────────────"
     ./dist/proot -S . /bin/bash --login
 fi
-
