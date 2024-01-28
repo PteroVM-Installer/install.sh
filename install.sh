@@ -34,9 +34,9 @@ if [[ -f "./installed" ]]; then
    ${NC}
     "
     echo "──────────────────────────────────────────────────────────────────────"
-    echo ""
+    echo " "
     echo "PteroVM - Your VM started successfully!"
-    echo ""
+    echo " "
     echo "──────────────────────────────────────────────────────────────────────"
     echo ""
     ./dist/proot -S . /bin/bash --login
@@ -77,9 +77,9 @@ else
    ${NC}
     "
     echo "──────────────────────────────────────────────────────────────────────"
-    echo ""
+    echo " "
     echo "PteroVM - Your VM started successfully!"
-    echo ""
+    echo " "
     echo "──────────────────────────────────────────────────────────────────────"
     echo ""
     ./dist/proot -S . /bin/bash --login
