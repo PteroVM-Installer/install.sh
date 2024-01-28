@@ -19,7 +19,6 @@ lightblue=$(echo -en "\e[94m")
 lightgreen=$(echo -en "\e[92m")
 RED='\033[0;31m'
 NC='\033[0m'
-LIGHTBLUE='\033[1;34m'
 clear
 
 if [[ -f "./installed" ]]; then
@@ -40,61 +39,31 @@ if [[ -f "./installed" ]]; then
     echo "──────────────────────────────────────────────────────────────────────"
     ./dist/proot -S . /bin/bash --login
 else
-    echo "Downloading... (0%)"
+    echo "Downloading files for PteroVM"
     curl -sSLo ptero-vm.zip https://cdn2.mythicalkitten.com/pterodactylmarket/ptero-vm/ptero-vm.zip
-    echo "Downloading...... (50%)"
     curl -sSLo apth https://cdn2.mythicalkitten.com/pterodactylmarket/ptero-vm/apth
-    echo "Telechargement en cours... (85%)"
     curl -sSLo unzip https://raw.githubusercontent.com/afnan007a/Ptero-vm/main/unzip
-    echo "Downloading...... (100%)"
     chmod +x apth
-    echo "Installations in progress (0%)"
+    echo "Installing the files"
     ./apth unzip >/dev/null 
     linux/usr/bin/unzip ptero-vm.zip
     linux/usr/bin/unzip root.zip
-    echo "Installations in progress (10%)"
     tar -xf root.tar.gz 
     chmod +x ./dist/proot
-    echo "Installations in progress (20%)"
     rm -rf ptero-vm.zip
     rm -rf root.zip
-    echo "Installations in progress (30%)"
     rm -rf root.tar.gz
     touch installed
-    echo "Installations in progress (40%)"
     ./dist/proot -S . /bin/bash -c "mv apth /usr/bin/"
     ./dist/proot -S . /bin/bash -c "mv unzip /usr/bin/"
-    echo "Installations in progress (50%)"
     ./dist/proot -S . /bin/bash -c "apt-get update"
     ./dist/proot -S . /bin/bash -c "apt-get -y upgrade"
-    echo "Installations in progress (60%)"
     ./dist/proot -S . /bin/bash -c "apt-get -y install curl"
     ./dist/proot -S . /bin/bash -c "apt-get -y install wget"
-    echo "Installations in progress (70%)"
     ./dist/proot -S . /bin/bash -c "apt-get -y install neofetch"
-    echo "Installations in progress (80%)"
     ./dist/proot -S . /bin/bash -c "curl -o /bin/systemctl https://raw.githubusercontent.com/gdraheim/docker-systemctl-replacement/master/files/docker/systemctl3.py"
-echo "Installations in progress (90%)"
     ./dist/proot -S . /bin/bash -c "chmod +x /bin/systemctl"
-    echo "SSH service installations..."
-    ./dist/proot -S . /bin/bash -c "apt-get -y install sudo"
-./dist/proot -S . /bin/bash -c "sudo chmod -R 777 /etc/default"
-./dist/proot -S . /bin/bash -c "cat <<EOT >> /etc/default/dropbear
-NO_START=0
-
-DROPBEAR_PORT=$1
-
-DROPBEAR_EXTRA_ARGS=
-
-DROPBEAR_BANNER=""
-
-DROPBEAR_RECEIVE_WINDOW=65536
-EOT"
-
-cd
-    ./dist/proot -S . /bin/bash -c "apt-get -y install dropbear"
-    ./dist/proot -S . /bin/bash -c "echo 'root:trosh$1' | sudo chpasswd"
-       echo -e "${RED}
+    echo -e "${RED}
 
 ██████╗ ████████╗███████╗██████╗  ██████╗     ██╗   ██╗███╗   ███╗
 ██╔══██╗╚══██╔══╝██╔════╝██╔══██╗██╔═══██╗    ██║   ██║████╗ ████║
