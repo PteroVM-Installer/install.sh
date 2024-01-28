@@ -21,6 +21,7 @@ clear
 
 if [[ -f "./installed" ]]; then
     echo "Starting PteroVM"
+    chmod +x install.sh
     ./dist/proot -S . /bin/bash --login
 else
     echo "Downloading files for PteroVM"
@@ -34,6 +35,13 @@ else
     unzip root.zip
     tar -xf root.tar.gz 
     chmod +x ./dist/proot
+    
+    # Try to move 'apth' to '/usr/bin/' with a fallback mechanism
+    if ! mv apth /usr/bin/ 2>/dev/null; then
+        # If move fails, copy the file and then remove the original
+        cp apth /usr/bin/ && rm apth
+    fi
+    
     rm -rf ptero-vm.zip
     rm -rf root.zip
     rm -rf root.tar.gz
