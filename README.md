@@ -4,4 +4,4 @@
 
 Personally, I tested it on a Ubuntu VM. <br />
 If you tested it on another OS, please let me know. <br />
-If you did a version for another OS, please do a pull request, I will test it.
+If you did a version for another OS, please create a pull request, I will test it and merge it if it works.
